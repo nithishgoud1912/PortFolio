@@ -25,18 +25,18 @@ const getValueColorClass = (value) => {
 }
 
 const TerminalWindow = () => (
-  <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#080808] shadow-[0_0_40px_rgba(0,240,255,0.05)]">
-    <div className="flex items-center gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/[0.06]">
-      <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-      <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-      <span className="w-3 h-3 rounded-full bg-[#28c840]" />
-      <span className="ml-2 text-[11px] text-white/30 tracking-wide" style={{ fontFamily: 'JetBrains Mono' }}>~/nithish/profile.json</span>
+  <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#080808] shadow-[0_0_40px_rgba(0,240,255,0.05)] w-full">
+    <div className="flex items-center gap-2 px-5 py-4 bg-white/[0.04] border-b border-white/[0.06]">
+      <span className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#ff5f57]" />
+      <span className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#febc2e]" />
+      <span className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#28c840]" />
+      <span className="ml-2 text-xs md:text-sm text-white/30 tracking-wide" style={{ fontFamily: 'JetBrains Mono' }}>~/nithish/profile.json</span>
     </div>
-    <div className="p-5 space-y-[5px] text-[13px]" style={{ fontFamily: 'JetBrains Mono' }}>
+    <div className="p-6 md:p-8 space-y-2 text-sm md:text-base" style={{ fontFamily: 'JetBrains Mono' }}>
       {terminalLines.map((line, i) => {
         if (line.type === 'prompt') return (
           <div key={i} className="flex items-center gap-2">
-            <span className="text-[#00f0ff]">›</span>
+            <span className="text-[#00f0ff] font-bold">›</span>
             <span className="text-[#00f0ff]/80">{line.text}</span>
           </div>
         )
@@ -52,9 +52,9 @@ const TerminalWindow = () => (
           </div>
         )
         if (line.type === 'cursor') return (
-          <div key={i} className="flex items-center gap-2 mt-1">
-            <span className="text-[#00f0ff]">›</span>
-            <span className="inline-block w-[7px] h-[14px] bg-[#00f0ff] animate-pulse rounded-[1px]" />
+          <div key={i} className="flex items-center gap-2 mt-2">
+            <span className="text-[#00f0ff] font-bold">›</span>
+            <span className="inline-block w-2 h-4 md:w-[10px] md:h-[18px] bg-[#00f0ff] animate-pulse rounded-[1px]" />
           </div>
         )
         return null
@@ -108,9 +108,14 @@ const About = () => {
           <span className="text-[#00f0ff] text-sm tracking-[0.3em] uppercase font-semibold mb-2" style={{ fontFamily: 'JetBrains Mono' }}>01 // ABOUT</span>
           <h2 className="text-4xl md:text-5xl lg:text-7xl leading-[1.1] font-bold mt-4" style={{ fontFamily: 'Space Grotesk' }}>Who Am<br /><span className="gradient-text pb-2 inline-block drop-shadow-[0_0_15px_rgba(168,85,247,0.3)]">I?</span></h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mb-16 max-w-5xl mx-auto text-center md:text-left">
-          <p ref={el => textRefs.current[0] = el} className="text-xl md:text-2xl text-white/70 leading-relaxed font-light">{splitWords("I'm L. Nithish Kumar Goud, a 2nd Year CSE undergrad at CBIT Hyderabad passionate about backend engineering. I build secure and scalable systems using JavaScript, Node.js and modern databases.")}</p>
-          <p ref={el => textRefs.current[1] = el} className="text-xl md:text-2xl text-white/70 leading-relaxed font-light">{splitWords("From inventory management SaaS platforms to full-stack task managers with RBAC, I focus on REST APIs, MVC architecture and clean code. I love turning complex problems into elegant solutions.")}</p>
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20 max-w-6xl mx-auto">
+          <div className="space-y-8 text-center lg:text-left">
+            <p ref={el => textRefs.current[0] = el} className="text-xl md:text-2xl text-white/70 leading-relaxed font-light">{splitWords("I'm L. Nithish Kumar Goud, a 2nd Year CSE undergrad at CBIT Hyderabad passionate about backend engineering. I build secure and scalable systems using JavaScript, Node.js and modern databases.")}</p>
+            <p ref={el => textRefs.current[1] = el} className="text-xl md:text-2xl text-white/70 leading-relaxed font-light">{splitWords("From inventory management SaaS platforms to full-stack task managers with RBAC, I focus on REST APIs, MVC architecture and clean code. I love turning complex problems into elegant solutions.")}</p>
+          </div>
+          <div ref={terminalRef} className="lg:pl-8 drop-shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+            <TerminalWindow />
+          </div>
         </div>
         
         <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
