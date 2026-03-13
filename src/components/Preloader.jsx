@@ -284,10 +284,10 @@ const Preloader = ({ onComplete }) => {
         <div className="absolute top-0 left-0 w-full h-[2px]">
           <div className="h-full bg-gradient-to-r from-[#00f0ff] via-[#a855f7] to-[#ec4899] transition-all duration-100" style={{ width: `${count}%` }} />
         </div>
-        <div className="text-sm tracking-[0.3em] uppercase mb-8 text-white/40 font-bold" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Constructing Reality</div>
-        <div className="relative">
-          <span className="text-[6rem] md:text-[10rem] font-bold gradient-text leading-none drop-shadow-2xl" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{String(count).padStart(3, '0')}</span>
-          <span className="absolute -right-8 top-4 text-[#00f0ff] text-2xl font-light">%</span>
+        <div className="text-xs sm:text-sm tracking-[0.3em] uppercase mb-4 sm:mb-8 text-white/40 font-bold text-center" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Constructing Reality</div>
+        <div className="relative flex items-start justify-center">
+          <span className="text-[4rem] sm:text-[6rem] md:text-[10rem] font-bold gradient-text leading-none drop-shadow-2xl" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{String(count).padStart(3, '0')}</span>
+          <span className="text-[#00f0ff] text-xl sm:text-2xl md:text-3xl font-light mt-1 sm:mt-2 md:mt-4 ml-1 md:ml-2">%</span>
         </div>
       </div>
     </div>
