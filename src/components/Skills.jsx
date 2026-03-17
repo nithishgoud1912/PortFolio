@@ -126,9 +126,6 @@ const Skills = () => {
   const orbitRef = useRef(null)
 
   useEffect(() => {
-    // Refresh ScrollTrigger to ensure experience section calculates correctly
-    ScrollTrigger.refresh()
-
     const ctx = gsap.context(() => {
       gsap.fromTo(headingRef.current,
         { y: 40, opacity: 0 },

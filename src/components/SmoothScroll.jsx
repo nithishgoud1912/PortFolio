@@ -11,7 +11,21 @@ const SmoothScroll = ({ children }) => {
     lenis.on('scroll', ScrollTrigger.update)
     gsap.ticker.add((time) => lenis.raf(time * 1000))
     gsap.ticker.lagSmoothing(0)
-    return () => { lenis.destroy() }
+
+    // Ensure all pinned elements and layout shifts are resolved before refreshing ScrollTrigger
+    const timeout = setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 500)
+
+    // Also observe the body height to seamlessly adapt the ScrollTriggers if height changes
+    const observer = new ResizeObserver(() => ScrollTrigger.refresh())
+    observer.observe(document.body)
+
+    return () => { 
+      clearTimeout(timeout)
+      observer.disconnect()
+      lenis.destroy() 
+    }
   }, [])
   return <>{children}</>
 }
