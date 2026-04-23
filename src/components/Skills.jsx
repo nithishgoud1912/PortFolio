@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FaReact, FaNodeJs, FaPython, FaJava, FaDocker, FaGitAlt } from 'react-icons/fa'
-import { SiNextdotjs, SiTailwindcss, SiPostgresql, SiMongodb, SiTypescript, SiJavascript, SiCplusplus, SiPrisma, SiExpress, SiClerk } from 'react-icons/si'
+import { FaReact, FaNodeJs, FaPython, FaJava, FaDocker, FaGitAlt, FaVuejs } from 'react-icons/fa'
+import { SiNextdotjs, SiTailwindcss, SiPostgresql, SiMongodb, SiTypescript, SiJavascript, SiCplusplus, SiPrisma, SiExpress, SiClerk, SiShadcnui } from 'react-icons/si'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -23,10 +23,12 @@ const categories = [
     icon: '🚀',
     items: [
       { icon: FaReact, name: 'React', color: '#61DAFB' },
+      { icon: FaVuejs, name: 'Vue', color: '#4FC08D' },
       { icon: SiNextdotjs, name: 'Next.js', color: '#ffffff' },
       { icon: FaNodeJs, name: 'Node.js', color: '#339933' },
       { icon: SiExpress, name: 'Express', color: '#ffffff' },
       { icon: SiTailwindcss, name: 'Tailwind CSS', color: '#06B6D4' },
+      { icon: SiShadcnui, name: 'Shadcn UI', color: '#333333' },
       { icon: SiPrisma, name: 'Prisma', color: '#5A67D8' },
       { icon: SiClerk, name: 'Clerk', color: '#6C47FF' },
     ],
