@@ -128,7 +128,7 @@ const Hero = () => {
         </div>
         
         <p ref={subRef} className="mt-6 text-base md:text-lg text-white/60 mx-auto font-light leading-relaxed max-w-2xl drop-shadow-sm">
-          Crafting secure & scalable systems using <span className="text-[#a855f7] font-medium drop-shadow-[0_0_5px_rgba(168,85,247,0.5)]">Node.js</span>, <span className="text-[#ec4899] font-medium drop-shadow-[0_0_5px_rgba(236,72,153,0.5)]">Next.js</span>, and modern architectures. <br className="hidden md:block" />2nd Year CSE Undergrad at <span className="text-[#00f0ff] font-medium drop-shadow-[0_0_5px_rgba(0,240,255,0.5)]">CBIT Hyderabad</span>.
+          Crafting secure & scalable systems using <span className="text-[#a855f7] font-medium drop-shadow-[0_0_5px_rgba(168,85,247,0.5)]">Node.js</span>, <span className="text-[#ec4899] font-medium drop-shadow-[0_0_5px_rgba(236,72,153,0.5)]">Next.js</span>, and modern architectures. <br className="hidden md:block" /> 3rd Year CSE Undergrad at <span className="text-[#00f0ff] font-medium drop-shadow-[0_0_5px_rgba(0,240,255,0.5)]">CBIT Hyderabad</span>.
         </p>
         
         <div ref={ctaRef} className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">

@@ -110,7 +110,7 @@ const About = () => {
         </div>
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20 max-w-6xl mx-auto">
           <div className="space-y-8 text-center lg:text-left">
-            <p ref={el => textRefs.current[0] = el} className="text-xl md:text-2xl text-white/70 leading-relaxed font-light">{splitWords("I'm L. Nithish Kumar Goud, a 2nd Year CSE undergrad at CBIT Hyderabad passionate about backend engineering. I build secure and scalable systems using JavaScript, Node.js and modern databases.")}</p>
+            <p ref={el => textRefs.current[0] = el} className="text-xl md:text-2xl text-white/70 leading-relaxed font-light">{splitWords("I'm L. Nithish Kumar Goud, a 3rd Year CSE undergrad at CBIT Hyderabad passionate about backend engineering. I build secure and scalable systems using JavaScript, Node.js and modern databases.")}</p>
             <p ref={el => textRefs.current[1] = el} className="text-xl md:text-2xl text-white/70 leading-relaxed font-light">{splitWords("From inventory management SaaS platforms to full-stack task managers with RBAC, I focus on REST APIs, MVC architecture and clean code. I love turning complex problems into elegant solutions.")}</p>
           </div>
           <div ref={terminalRef} className="lg:pl-8 drop-shadow-[0_0_30px_rgba(0,240,255,0.1)]">
