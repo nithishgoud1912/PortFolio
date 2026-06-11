@@ -10,7 +10,7 @@ const terminalLines = [
   { type: 'key-value', key: '  "name"', value: '"L. Nithish Kumar Goud"' },
   { type: 'key-value', key: '  "role"', value: '"Backend Engineer"' },
   { type: 'key-value', key: '  "university"', value: '"CBIT Hyderabad"' },
-  { type: 'key-value', key: '  "year"', value: '2' },
+  { type: 'key-value', key: '  "year"', value: '3rd' },
   { type: 'key-value', key: '  "stack"', value: '["Node.js", "Next.js", "Prisma"]' },
   { type: 'key-value', key: '  "focus"', value: '"SaaS & REST APIs"' },
   { type: 'key-value', key: '  "available"', value: 'true', last: true },
