@@ -7,33 +7,38 @@
   --color-accent-purple: #a855f7;
   --color-accent-pink: #ec4899;
   --font-grotesk: 'Space Grotesk', sans-serif;
+  --font-inter: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
 html {
-  scroll-padding-top: 6rem; /* Account for fixed navbar */
+  scroll-padding-top: 6rem;
 }
 
 body {
   background: #0a0a0a;
   color: #ffffff;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Inter', 'Space Grotesk', sans-serif;
   overflow-x: hidden;
   cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @media (max-width: 768px) { body { cursor: auto; } }
 
 ::selection { background: #00f0ff; color: #0a0a0a; }
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #0a0a0a; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f0ff, #a855f7); border-radius: 3px; }
+
+/* ── Utility Classes ── */
 
 .glass {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .gradient-text {
@@ -41,7 +46,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.3));
 }
 
 .gradient-border {
@@ -64,11 +68,7 @@ body {
   mask-composite: exclude;
 }
 
-@keyframes gradient-rotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+/* ── Noise Overlay ── */
 
 .noise-overlay::after {
   content: '';
@@ -77,6 +77,21 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
+}
+
+/* ── Section Divider ── */
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 80%, transparent);
+}
+
+/* ── Keyframes ── */
+
+@keyframes gradient-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes marquee {
@@ -97,4 +112,95 @@ body {
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes drift-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, 6%) scale(1.08); }
+}
+
+@keyframes drift-slow-reverse {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5%, -4%) scale(1.06); }
+}
+
+.animate-drift-slow {
+  animation: drift-slow 28s ease-in-out infinite;
+}
+
+.animate-drift-slow-reverse {
+  animation: drift-slow-reverse 34s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(8px); opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift-slow, .animate-drift-slow-reverse {
+    animation: none;
+  }
+}
+
+/* ── Blog Post Styling ── */
+.blog-article-styles h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2.2rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+
+.blog-article-styles p {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 1.4rem;
+}
+
+.blog-article-styles ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.4rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.95rem;
+}
+
+.blog-article-styles li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.blog-article-styles pre {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.2rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin-bottom: 1.4rem;
+}
+
+.blog-article-styles code {
+  font-family: 'JetBrains Mono', monospace;
+  color: #00f0ff;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+}
+
+.blog-article-styles pre code {
+  color: #e2e8f0;
+  background: transparent;
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
