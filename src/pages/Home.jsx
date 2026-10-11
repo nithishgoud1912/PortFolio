@@ -1,59 +1,80 @@
 import { useState } from 'react'
-import Projects from '../components/Projects'
 import { Link } from 'react-router-dom'
-import { FiArrowUpRight, FiGithub, FiLinkedin, FiMail, FiCpu, FiDatabase, FiLayout, FiTerminal } from 'react-icons/fi'
-
+import { FiArrowUpRight, FiArrowDown, FiGithub, FiLinkedin, FiMail, FiCpu, FiDatabase, FiLayout, FiCode, FiCheck, FiCopy, FiMapPin } from 'react-icons/fi'
+import Projects from '../components/Projects'
 import { blogArticles } from '../data/articles'
 
 const github = 'https://github.com/nithishgoud1912'
 const linkedin = 'https://www.linkedin.com/in/lenkapothula-nithish-kumar-goud-2ab7a0313/'
-const email = 'mailto:nanigoud191206@gmail.com'
-const skillIcons = [FiCpu, FiDatabase, FiLayout, FiTerminal]
 const skills = [
-  ['AI & automation', 'Connecting language models to useful workflows.', ['Groq API', 'Llama 3.3', 'n8n', 'GitHub API', 'Webhooks', 'Secret scanning']],
-  ['Backend & data', 'The systems behind the experience.', ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Prisma', 'REST APIs', 'JWT', 'RBAC', 'Clerk']],
-  ['Frontend & tools', 'From interface to implementation.', ['React', 'Next.js', 'Vue', 'Tailwind CSS', 'Shadcn UI', 'Docker', 'Git', 'OAuth']],
-  ['Languages', 'A foundation for solving problems.', ['Python', 'JavaScript', 'TypeScript', 'Java', 'C++', 'C']],
+  { title: 'AI & automation', icon: FiCpu, note: 'Turning intelligence into something useful.', description: 'I connect language models to development workflows, APIs, and automation. ReviewPilot brings these pieces together in a code review pipeline.', tools: ['Groq API', 'Llama 3.3', 'n8n', 'GitHub API', 'Webhooks', 'Secret scanning'] },
+  { title: 'Backend & data', icon: FiDatabase, note: 'The foundations that make everything work.', description: 'APIs, structured data, authentication, and access control. I build the systems behind inventory platforms and collaborative applications.', tools: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Prisma', 'REST APIs', 'JWT', 'RBAC', 'Clerk'] },
+  { title: 'Interfaces & tools', icon: FiLayout, note: 'From an idea to an interface.', description: 'I turn application logic into interfaces with React and Next.js, and use version control, containers, and integrations to bring projects together.', tools: ['React', 'Next.js', 'Vue', 'Tailwind CSS', 'Shadcn UI', 'Docker', 'Git', 'OAuth'] },
+  { title: 'Languages', icon: FiCode, note: 'Different languages. One problem-solving mindset.', description: 'My foundations span scripting, web development, and algorithms. I choose a language around the problem and keep learning through hands-on projects.', tools: ['Python', 'JavaScript', 'TypeScript', 'Java', 'C++', 'C'] },
 ]
 const journey = [
-  ['2026 — Present', 'AI & backend engineering', 'Self-directed learning & projects', 'Building AI-powered development workflows with ReviewPilot, alongside SaaS platforms and backend systems.'],
-  ['2025 — 2026', 'Full stack development', 'Personal projects', 'Developed Team Task Manager with role-based access, NexIDE, and a collection of React applications.'],
-  ['2024 — 2025', 'Programming foundations', 'HackerRank & competitive coding', 'Built a foundation in C++, Java, algorithms, and practical problem solving.'],
-  ['2024 — Present', 'Computer Science & Engineering', 'CBIT, Hyderabad · B.Tech', 'Studying algorithms, data structures, and software systems while learning through hands-on projects.'],
+  ['2026 — Present', 'AI & backend engineering', 'Self-directed projects', 'Exploring AI development workflows with ReviewPilot, alongside SaaS platforms and backend systems.'],
+  ['2025 — 2026', 'Full stack development', 'Personal projects', 'Building Team Task Manager, NexIDE, and practical applications with React and Node.js.'],
+  ['2024 — Present', 'Computer Science & Engineering', 'CBIT, Hyderabad · B.Tech', 'Learning algorithms, data structures, and software systems through study and hands-on projects.'],
+  ['2024 — 2025', 'Programming foundations', 'HackerRank & competitive coding', 'Building a foundation in C++, Java, algorithms, and practical problem solving.'],
 ]
-function ExternalLink({ href, children, className = '', ...props }) {
-  return <a href={href} className={className} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
+
+function External({ href, children, ...props }) {
+  return <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
 }
-function SectionHeading({ number, label, title, children }) {
-  return <div className="section-heading"><div><span className="eyebrow">{number} / {label}</span><h2>{title}</h2></div>{children && <div className="section-summary">{children}</div>}</div>
+export function Heading({ number, label, title, children }) {
+  return <div className="section-heading" data-reveal><div><span className="section-label"><span>{number}</span>{label}</span><h2>{title}</h2></div>{children && <div className="section-summary">{children}</div>}</div>
 }
+
 export default function Home() {
+  const [skill, setSkill] = useState(0)
   const [emailStatus, setEmailStatus] = useState('')
+  const ActiveIcon = skills[skill].icon
   async function copyEmail() {
-    try { await navigator.clipboard.writeText('nanigoud191206@gmail.com'); setEmailStatus('Email address copied') }
-    catch { setEmailStatus('Could not copy. Use the email link to get in touch.') }
+    try { await navigator.clipboard.writeText('nanigoud191206@gmail.com'); setEmailStatus('Email copied') }
+    catch { setEmailStatus('Use the email link to get in touch.') }
+  }
+  function onTabKey(event) {
+    const offsets = { ArrowRight: 1, ArrowLeft: -1 }
+    let next
+    if (event.key in offsets) next = (skill + offsets[event.key] + skills.length) % skills.length
+    if (event.key === 'Home') next = 0
+    if (event.key === 'End') next = skills.length - 1
+    if (next !== undefined) { event.preventDefault(); setSkill(next); document.getElementById(`skill-tab-${next}`).focus() }
   }
   return <>
-    <section className="intro-section editorial-intro" aria-labelledby="hero-title">
-      <div className="editorial-topline"><span className="intro-role">AI Engineer & Backend Developer</span><span className="availability"><i /> Open to internship opportunities</span></div>
-      <h1 id="hero-title" className="editorial-title"><span>Engineering ideas. </span><span>Intelligent <em>systems.</em></span></h1>
-      <div className="intro-copy">
-      <p className="intro-name">Hi, I’m Nithish Kumar Goud.</p>
-      <p className="intro-description">I build AI-powered workflows and full stack applications, connecting language models with secure APIs, structured data, and practical automation.</p>
-      <div className="intro-actions"><a className="button button-dark" href="#projects">See my projects <FiArrowUpRight /></a><a className="button button-outline" href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer">View résumé <FiArrowUpRight /></a></div>
-      <div className="intro-links"><span>CBIT · CSE undergraduate</span><span>Hyderabad, India</span><ExternalLink href={github} aria-label="Nithish on GitHub"><FiGithub /></ExternalLink><ExternalLink href={linkedin} aria-label="Nithish on LinkedIn"><FiLinkedin /></ExternalLink><a href={email} aria-label="Email Nithish"><FiMail /></a></div>
-    </div><aside className="engineering-card" aria-label="Engineering overview">
-      <div className="engineer-profile"><img src={`${import.meta.env.BASE_URL}images/profile.jpg`} alt="Nithish Kumar Goud" fetchpriority="high" /><div><strong>Nithish Kumar Goud</strong><span>AI Engineer & Backend Developer</span></div><span className="profile-mark" aria-hidden="true">↗</span></div>
-      <div className="engineering-card-body"><span className="eyebrow">MY ENGINEERING APPROACH</span><h2>From a model.<br />To a useful system.</h2><div className="system-flow" aria-hidden="true"><span><FiTerminal /><small>Input</small></span><i>→</i><span><FiCpu /><small>Intelligence</small></span><i>→</i><span><FiArrowUpRight /><small>Action</small></span></div>
-        <div className="capability-row"><span>01</span><div><h3>Applied AI</h3><p>LLM integration & automated workflows</p></div></div><div className="capability-row"><span>02</span><div><h3>Backend systems</h3><p>APIs, databases & role-based access</p></div></div><div className="capability-row"><span>03</span><div><h3>End-to-end delivery</h3><p>Interfaces, integrations & deployment</p></div></div>
-        <a href="#projects" className="overview-project"><span><small>EXPLORE MY AI WORK</small><strong>ReviewPilot</strong></span><FiArrowUpRight /></a>
-      </div></aside></section>
-    <div className="focus-strip"><span>AI & AUTOMATION</span><span>BACKEND ENGINEERING</span><span>FULL STACK DEVELOPMENT</span><a href="#projects">08 PERSONAL PROJECTS <FiArrowUpRight /></a></div>
+    <section className="hero shell" aria-labelledby="hero-title">
+      <div className="hero-copy">
+        <div className="hero-eyebrow"><span className="status-dot" /> Available for internships <span className="hero-year">PORTFOLIO / 2026</span></div>
+        <h1 id="hero-title">Hi, I’m<br /><span>Nithish<span className="name-dot">.</span></span></h1>
+        <div className="hero-role"><span className="role-line" /> AI engineer.<br /><span className="role-indent">Backend builder.</span></div>
+        <p className="hero-description">I turn complex ideas into useful software.<br className="desktop-break" /> AI workflows, thoughtful interfaces, and the systems that connect them.</p>
+        <div className="hero-actions"><a className="button primary" href="#projects">Explore my work <FiArrowUpRight /></a><a className="button secondary" href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer">View résumé <FiArrowUpRight /></a></div>
+        <div className="hero-socials"><External href={github} aria-label="Nithish on GitHub"><FiGithub /></External><External href={linkedin} aria-label="Nithish on LinkedIn"><FiLinkedin /></External><a href="mailto:nanigoud191206@gmail.com" aria-label="Email Nithish"><FiMail /></a><span><FiMapPin /> Hyderabad, India</span></div>
+      </div>
+      <div className="portrait-composition">
+        <span className="portrait-orbit" aria-hidden="true" />
+        <div className="portrait-frame"><img src={`${import.meta.env.BASE_URL}images/profile.jpg`} alt="L. Nithish Kumar Goud" fetchpriority="high" /><div className="portrait-caption"><span>THE PERSON BEHIND THE CODE</span><strong>Nithish Kumar Goud <FiArrowUpRight /></strong></div></div>
+        <div className="portrait-sticker"><span aria-hidden="true">✳</span><p>Always curious.<br /><strong>Always building.</strong></p></div>
+        <div className="portrait-badge"><span className="status-dot" /><span>CSE undergraduate <strong>CBIT, Hyderabad</strong></span></div>
+        <span className="portrait-side-note">IDEAS → CODE → IMPACT</span>
+      </div>
+      <div className="hero-bottom"><span>Good software starts with a good question.</span><a href="#projects">SCROLL TO DISCOVER <FiArrowDown /></a></div>
+    </section>
+    <div className="discipline-band" aria-label="Engineering focus"><div>{['Applied AI', 'Backend systems', 'Full stack development', 'Creative problem solving'].map(item => <span key={item}>{item}<i aria-hidden="true">✳</i></span>)}</div></div>
     <Projects />
-    <section className="page-section about" id="about"><SectionHeading number="02" label="ABOUT ME" title="About me." /><div className="about-body"><p className="lead">I’m L. Nithish Kumar Goud, a Computer Science undergraduate at CBIT, Hyderabad, working at the intersection of <em>AI and backend engineering.</em></p><div><p>My work connects language models with practical development workflows, and pairs them with the APIs, databases, and access controls that make software useful.</p><p>From an AI code review pipeline to inventory management and collaborative tools, I learn by building, testing, and refining. I care about clear architecture, secure defaults, and a good experience for the person using it.</p><a className="text-link" href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer">View my résumé <FiArrowUpRight /></a></div></div><div className="about-facts"><div><strong>08</strong><span>Projects in this portfolio</span></div><div><strong>AI + Web</strong><span>My engineering focus</span></div><div><strong>CBIT</strong><span>Computer Science & Engineering</span></div></div></section>
-    <section className="page-section skills-section" id="skills"><SectionHeading number="03" label="TOOLKIT" title="Skills & technologies.">A practical stack for connecting intelligence, infrastructure, and interfaces.</SectionHeading><div className="skill-grid">{skills.map(([title, description, tools], i) => <article key={title}><div className="skill-card-top"><span className="skill-number">0{i + 1} /</span><span className="skill-icon" aria-hidden="true">{(() => { const Icon = skillIcons[i]; return <Icon /> })()}</span></div><h3>{title}</h3><p>{description}</p><ul className="tags">{tools.map(tool => <li key={tool}>{tool}</li>)}</ul></article>)}</div></section>
-    <section className="page-section journey-section" id="experience"><SectionHeading number="04" label="JOURNEY" title="Experience & education.">My path through computer science, personal projects, and applied AI.</SectionHeading><div className="journey-list">{journey.map(([date, title, place, description]) => <article key={title}><span className="journey-date">{date}</span><div><h3>{title}</h3><span className="journey-place">{place}</span><p>{description}</p></div><span className="journey-dot" aria-hidden="true" /></article>)}</div></section>
-    <section className="page-section writing-section"><SectionHeading number="05" label="FIELD NOTES" title="Engineering notes."><Link className="text-link" to="/blog">All writing <FiArrowUpRight /></Link></SectionHeading><div className="writing-grid">{blogArticles.slice(0, 3).map(article => <Link className="writing-card" to={`/blog/${article.slug}`} key={article.id}><span className="eyebrow">{article.category}</span><h3>{article.title}</h3><span className="writing-meta">{article.readTime}<span className="writing-arrow"><FiArrowUpRight /></span></span></Link>)}</div></section>
-    <section className="contact-section" id="contact"><span className="eyebrow">06 / LET’S CONNECT</span><div className="contact-heading"><h2>Build something<br />useful<span>.</span></h2><a href={email} className="contact-arrow" aria-label="Start a conversation by email"><FiArrowUpRight /></a></div><div className="contact-bottom"><p>Open to AI engineering and backend internships,<br />interesting projects, and good conversations.</p><div className="contact-email-group"><a className="contact-email" href={email}>nanigoud191206@gmail.com</a><button className="copy-email" onClick={copyEmail} aria-label="Copy email address">{emailStatus === 'Email address copied' ? 'Copied ✓' : 'Copy email'}</button><span className="sr-only" role="status">{emailStatus}</span></div><div className="contact-socials"><ExternalLink href={github}>GitHub ↗</ExternalLink><ExternalLink href={linkedin}>LinkedIn ↗</ExternalLink><a href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer">Résumé ↗</a></div></div></section>
+    <section className="section shell" id="about"><Heading number="02" label="A LITTLE ABOUT ME" title={<>Curiosity is my<br /><em>starting point.</em></>} />
+      <div className="about-layout"><div className="about-manifesto" data-reveal><span className="large-asterisk" aria-hidden="true">✳</span><p>I like understanding how things work.<br />Then building something <span>better.</span></p><span className="mono">LEARN. BUILD. REFINE. REPEAT.</span></div>
+        <div className="about-copy" data-reveal><p>I’m L. Nithish Kumar Goud, a Computer Science undergraduate at CBIT, Hyderabad. My work lives at the intersection of AI and backend engineering.</p><p>From an AI code review pipeline to inventory management and collaborative tools, I learn by building, testing, and refining. I care about clear architecture, secure defaults, and the person using the software.</p><a className="text-link" href="#experience">Follow my journey <FiArrowUpRight /></a></div></div>
+      <div className="fact-row" data-reveal><div><strong>08<span> /</span></strong><span>Personal projects</span></div><div><strong>AI + Web</strong><span>Engineering focus</span></div><div><strong>CBIT</strong><span>Computer Science & Engineering</span></div></div>
+    </section>
+    <section className="section shell" id="skills"><Heading number="03" label="MY TOOLKIT" title={<>The right tools.<br /><em>For the right problems.</em></>}>Explore the technologies I use to connect intelligence, infrastructure, and interfaces.</Heading>
+      <div className="toolkit" data-reveal><div className="skill-tabs" role="tablist" aria-label="Skill categories">{skills.map((item, index) => { const Icon = item.icon; return <button id={`skill-tab-${index}`} key={item.title} role="tab" aria-selected={skill === index} aria-controls="skill-panel" tabIndex={skill === index ? 0 : -1} onClick={() => setSkill(index)} onKeyDown={onTabKey}><Icon /><span>{item.title}</span><FiArrowUpRight /></button> })}</div>
+        <div id="skill-panel" className="skill-panel" role="tabpanel" aria-labelledby={`skill-tab-${skill}`} tabIndex={0}><div className="skill-panel-content" key={skill}><div className="skill-panel-top"><span className="mono">0{skill + 1} / {skills[skill].title.toUpperCase()}</span><ActiveIcon /></div><h3>{skills[skill].note}</h3><p>{skills[skill].description}</p><ul className="tool-chips">{skills[skill].tools.map(tool => <li key={tool}>{tool}</li>)}</ul></div></div>
+      </div>
+    </section>
+    <section className="section shell" id="experience"><Heading number="04" label="THE JOURNEY" title={<>Learning by<br /><em>doing.</em></>}>A work in progress, in the best sense of the phrase.</Heading><div className="timeline">{journey.map(([date, title, place, description], index) => <article key={title} data-reveal><span className="timeline-index">0{index + 1}</span><span className="timeline-date">{date}</span><div><h3>{title}</h3><span className="timeline-place">{place}</span><p>{description}</p></div><FiArrowUpRight aria-hidden="true" /></article>)}</div></section>
+    <section className="section shell writing-section"><Heading number="05" label="THINKING OUT LOUD" title={<>Notes from<br /><em>the build.</em></>}><Link className="text-link" to="/blog">All writing <FiArrowUpRight /></Link></Heading><div className="notes-grid">{blogArticles.slice(0, 3).map((article, index) => <Link className="note-card" to={`/blog/${article.slug}`} key={article.id} data-reveal><div><span className="mono">{article.category}</span><span className="note-number">0{index + 1}</span></div><h3>{article.title}</h3><div className="note-bottom"><span>{article.readTime}</span><span className="round-arrow"><FiArrowUpRight /></span></div></Link>)}</div></section>
+    <section className="contact-wrap shell" id="contact"><div className="contact-panel" data-reveal><div className="contact-top"><span className="section-label">06 / NEXT CHAPTER</span><span className="contact-status"><span className="status-dot" /> Open to opportunities</span></div><h2>Something great<br />starts with <em>hello.</em><span aria-hidden="true">✳</span></h2><div className="contact-grid"><div><p>Have a project, an internship opportunity,<br />or just a good question? Let’s talk.</p><div className="contact-socials"><External href={github}>GitHub <FiArrowUpRight /></External><External href={linkedin}>LinkedIn <FiArrowUpRight /></External></div></div><div className="email-block"><a href="mailto:nanigoud191206@gmail.com">nanigoud191206@gmail.com <FiArrowUpRight /></a><button className="copy-button" onClick={copyEmail}>{emailStatus === 'Email copied' ? <FiCheck /> : <FiCopy />}{emailStatus === 'Email copied' ? 'Email copied' : 'Copy email address'}</button><span className="copy-status" role="status">{emailStatus === 'Email copied' ? '' : emailStatus}</span></div></div></div></section>
   </>
 }
