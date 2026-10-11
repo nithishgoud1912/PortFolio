@@ -13,7 +13,7 @@ export default function App() {
   const location = useLocation()
   const scrollTo = useSmoothScroll()
   const [theme, setTheme] = useState(() => {
-    try { return localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark' } catch { return 'dark' }
+    try { return localStorage.getItem('portfolio-theme') === 'dark' ? 'dark' : 'light' } catch { return 'light' }
   })
   const [quickOpen, setQuickOpen] = useState(false)
   useEffect(() => {
